@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw.cmd clean *)",
+      "PowerShell($env:JAVA_HOME = \"C:\\\\Users\\\\Hp\\\\.jdks\\\\jbr-21.0.10\"; cd D:\\\\Projects\\\\Personal\\\\outvoice\\\\outvoice-backend\\\\outvoice; .\\\\mvnw.cmd clean compile 2>&1)"
+    ]
+  }
+}

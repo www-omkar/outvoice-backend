@@ -1,3 +1,23 @@
 spring:
   application:
     name: outvoice
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/outvoice}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiry-ms: ${JWT_EXPIRY_MS:86400000}
+
+app:
+  # Set ALLOW_DUPLICATE_SIGNUP=true to skip 409 on repeated sign-ups (dev/test only)
+  allow-duplicate-signup: ${ALLOW_DUPLICATE_SIGNUP:false}
