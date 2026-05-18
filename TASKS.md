@@ -35,6 +35,16 @@
 - `GlobalExceptionHandler` handles `MethodArgumentNotValidException` (400), `DataIntegrityViolationException` (409 duplicate), `BadCredentialsException` (401)
 - All errors return `ApiError` shape: `{ status, message, errors[] }`
 
+## Rate limiting
+
+### Auth endpoint rate limiter [DONE]
+- `RateLimitFilter` — `OncePerRequestFilter` + `@Component`; applies only to `/api/auth/signup` and `/api/auth/login` via `shouldNotFilter()`
+- Per-IP token bucket via Bucket4j 8.10.1 (`bucket4j_jdk17-core`)
+- IP resolved from `X-Forwarded-For` header (first value) or `RemoteAddr` fallback
+- Default: 10 requests per 60-second window per IP; configurable via `RATE_LIMIT_AUTH_CAPACITY` / `RATE_LIMIT_AUTH_REFILL_SECONDS` env vars
+- Returns HTTP 429 with `{ status, message, errors[] }` body matching `ApiError` shape
+- Note: buckets are in-memory (`ConcurrentHashMap`) — not shared across multiple instances; revisit if running replicated
+
 ## Pending
 
 - Invoice entity and PDF generation (OpenPDF dependency present, not wired up)
